@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Models/user.dart';
+import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
-import '../data_desing.dart';
+import '../Widgets/data_desing.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -29,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             centerTitle: true,
             title: const Text(
               "Profile",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black ,fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
@@ -38,8 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 200,
-                  width: 200,
+                  height: 180,
+                  width: 180,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.lightBlue,
@@ -48,8 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Image.asset(
                       'assets/images/user-image-default.webp',
                       fit: BoxFit.cover,
-                      width: 200,
-                      height: 200,
+                      width: 120,
+                      height: 120,
                     ),
                   ),
                 ),
@@ -63,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text(
                   userModel.userName,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -73,22 +74,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
            DataDesign("Mobile Number", userModel.userPhone),
            DataDesign("Email", userModel.userEmail),
            DataDesign("Address", userModel.userAddress),
-          Center(
-            child: SizedBox(
-              width: 200,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                ),
-                onPressed: () {
-                  // Add your button logic here
-                },
-                child: const Text("Log Out"),
-              ),
+
+          Padding(
+            padding: const EdgeInsets.only(top:30.0),
+            child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+
+              children: [
+
+
+                SizedBox( width:150, height: 50,    child: ElevatedButton(onPressed: (){}, child: Text("Log Out",style: TextStyle(color: Colors.black , fontSize: 16,fontWeight: FontWeight.bold)) ,style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red),))),
+                SizedBox( width:150, height: 50,    child: ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>EditCustmerProfile()));}, child: Text("Edit",style: TextStyle(color: Colors.black , fontSize: 16,fontWeight: FontWeight.bold)) ,style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow)))),
+
+
+              ],
             ),
-          ),
-        ], // Add this comma to fix the issue
+          )
+
+        ],
       ),
     );
   }
