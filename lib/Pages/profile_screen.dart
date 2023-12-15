@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:untitled/Models/user.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
+import '../Widgets/custom_tab_bar_widget.dart';
 import '../Widgets/data_desing.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,7 +13,9 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin  {
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getDetails();
@@ -144,6 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+
     );
   }
 }
