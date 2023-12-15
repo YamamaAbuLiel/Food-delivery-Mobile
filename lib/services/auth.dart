@@ -12,21 +12,8 @@ class AuthMethods {
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
       print("Error checking for duplicate phone number: $e");
-      return true; // Assume it's a duplicate to be cautious
+      return true;
     }
-  }
-
-  bool isPhoneNumberValid(String phone) {
-    // Add your phone number validation logic here
-    String phonePattern = r'^059\d{7}$';
-    RegExp regex = RegExp(phonePattern);
-    return regex.hasMatch(phone);
-  }
-
-  getUserDetails()async{
-    User currentUser=_auth.currentUser!;
-    DocumentSnapshot documentSnapshot= await users.doc(currentUser.uid).get();
-    return UserModel.fromSnap(documentSnapshot);
   }
 
   Future<String> signup({
@@ -84,6 +71,84 @@ class AuthMethods {
     }
     return res;
   }
+  getUserDetails()async{
+    User currentUser=_auth.currentUser!;
+    DocumentSnapshot documentSnapshot= await users.doc(currentUser.uid).get();
+    return UserModel.fromSnap(documentSnapshot);
+  }
+
+  Future<String> editProfileData({
+    required String userId,
+    required String userName,
+    required String userEmail,
+    required String userPhone,
+    required String userAddress,
+  }) async {
+    try {
+      if (userName.isNotEmpty && userEmail.isNotEmpty && userPhone.isNotEmpty && userAddress.isNotEmpty) {
+        if (!isPhoneNumberValid(userPhone)) {
+          return "Invalid phone number format";
+        }
+
+        if (!isEmailValid(userEmail)) {
+          return "Invalid email format";
+        }
+
+        if (await isDuplicatePhone(userId, userPhone)) {
+          return "Phone number is already in use by another user";
+        }
+
+
+
+        await users.doc(userId).update({
+          "userName": userName,
+          "userEmail": userEmail,
+          "userPhone": userPhone,
+          "userAddress": userAddress,
+        });
+
+        return "Success";
+      } else {
+        return "Enter all fields";
+      }
+    } on Exception catch (e) {
+      print(e);
+      return "An error occurred";
+    }
+  }
+
+  Future<bool> isDuplicatePhone(String userId, String mobile) async {
+    try {
+      QuerySnapshot querySnapshot = await users
+          .where('userPhone', isEqualTo: mobile)
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      return querySnapshot.docs.isEmpty;
+    } catch (e) {
+      print("Error checking for duplicate phone number: $e");
+      return true;
+    }
+  }
+
+
+
+
+
+
+
+  bool isPhoneNumberValid(String phone) {
+    String phonePattern = r'^059\d{7}$';
+    RegExp regex = RegExp(phonePattern);
+    return regex.hasMatch(phone);
+  }
+
+  bool isEmailValid(String email) {
+    String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$';
+    RegExp regex = RegExp(emailPattern);
+    return regex.hasMatch(email);
+  }
+
 
 }
 

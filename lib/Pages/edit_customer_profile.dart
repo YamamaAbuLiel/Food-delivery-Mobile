@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Models/user.dart';
 import 'package:untitled/provider/userprovider.dart';
+import 'package:untitled/services/auth.dart';
 
 import '../Widgets/custom_text_field_widget.dart';
 
@@ -17,6 +18,14 @@ class EditCustmerProfile extends StatefulWidget {
 class _EditCustmerProfileState extends State<EditCustmerProfile> {
   @override
   Widget build(BuildContext context) {
+    void showErrorMessage(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
     UserModel userData=Provider.of<UserProvider>(context).userModel!;
     TextEditingController fullName = TextEditingController();
     TextEditingController email = TextEditingController();
@@ -27,6 +36,18 @@ class _EditCustmerProfileState extends State<EditCustmerProfile> {
     email.text=userData.userEmail;
     phone.text=userData.userPhone;
     address.text=userData.userAddress;
+
+    update()async{
+      try {
+        String response= await AuthMethods().editProfileData(userId: userData.userId, userName: fullName.text, userEmail: email.text, userPhone: phone.text, userAddress: address.text);
+        if(response=="Success"){Navigator.pop(context);}
+        else {showErrorMessage(response);
+        }
+      } on Exception catch (e) {
+        print(e);
+      }
+      Provider.of<UserProvider>(context,listen: false).getDetails();
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(231, 108, 56, 100),
@@ -65,7 +86,9 @@ class _EditCustmerProfileState extends State<EditCustmerProfile> {
                 padding: const EdgeInsets.all(8.0),
                 child: Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      update();
+                    },
                     child: Text(
                       "Update",
                       style: TextStyle(

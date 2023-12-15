@@ -31,116 +31,118 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          AppBar(
-            backgroundColor: const Color.fromRGBO(231, 108, 56, 100),
-            centerTitle: true,
-            title: const Text(
-              "Profile",
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            AppBar(
+              backgroundColor: const Color.fromRGBO(231, 108, 56, 100),
+              centerTitle: true,
+              title: const Text(
+                "Profile",
+                style: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 180,
-                  width: 180,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.lightBlue,
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/user-image-default.webp',
-                      fit: BoxFit.cover,
-                      width: 120,
-                      height: 120,
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 180,
+                    width: 180,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.lightBlue,
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/user-image-default.webp',
+                        fit: BoxFit.cover,
+                        width: 120,
+                        height: 120,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(25.0),
-            child: Row(
-              children: [
-                Text(
-                  userModel.userName ?? '',
-                  // Use ?? to provide a default value if userModel.userName is null
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: EdgeInsets.only(top:25.0,left: 25.0),
+              child: Row(
+                children: [
+                  Text(
+                    userModel.userName ?? '',
+                    // Use ?? to provide a default value if userModel.userName is null
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          DataDesign("Mobile Number", userModel.userPhone ?? ''),
-          DataDesign("Email", userModel.userEmail ?? ''),
-          DataDesign("Address", userModel.userAddress ?? ''),
+            DataDesign("Mobile Number", userModel.userPhone ?? ''),
+            DataDesign("Email", userModel.userEmail ?? ''),
+            DataDesign("Address", userModel.userAddress ?? ''),
 
-          Padding(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: 150,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Log Out",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.red),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 150,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditCustmerProfile(),
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Log Out",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Edit",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
                       ),
                     ),
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.yellow),
+                  ),
+                  SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditCustmerProfile(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Edit",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.yellow),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
