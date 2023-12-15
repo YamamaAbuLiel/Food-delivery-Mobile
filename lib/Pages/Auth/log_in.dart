@@ -12,6 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _State extends State<LoginPage> {
+  //Control and manipulate the text entered into textfields
+
   TextEditingController emailCon=TextEditingController();
   TextEditingController passwordcon=TextEditingController();
   signin() async{

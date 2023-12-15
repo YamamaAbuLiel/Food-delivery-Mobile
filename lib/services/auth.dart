@@ -3,9 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:untitled/Models/user.dart';
 
 class AuthMethods {
+  //To handle user authentication and Firebase Firestore
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference users = FirebaseFirestore.instance.collection("users");
-
+//Check if the phone number is duplicated in DB
   Future<bool> checkForDuplicatePhone(String mobile) async {
     try {
       QuerySnapshot querySnapshot = await users.where('userPhone', isEqualTo: mobile).get();
@@ -25,7 +26,7 @@ class AuthMethods {
   }) async {
     try {
       if (userEmail.isNotEmpty && userPhone.isNotEmpty && userName.isNotEmpty && password.isNotEmpty ||userAddress.isNotEmpty) {
-        // Validate phone number format
+        //  Check Validattion of  phone number format
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
         }
@@ -73,6 +74,7 @@ class AuthMethods {
   }
   getUserDetails()async{
     User currentUser=_auth.currentUser!;
+    //take the curent data
     DocumentSnapshot documentSnapshot= await users.doc(currentUser.uid).get();
     return UserModel.fromSnap(documentSnapshot);
   }
@@ -85,6 +87,7 @@ class AuthMethods {
     required String userAddress,
   }) async {
     try {
+      //Check if the user leave fields empty or enter invalid data
       if (userName.isNotEmpty && userEmail.isNotEmpty && userPhone.isNotEmpty && userAddress.isNotEmpty) {
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
@@ -149,6 +152,10 @@ class AuthMethods {
     return regex.hasMatch(email);
   }
 
+  signout()async{
+     await _auth.signOut();
+
+  }
 
 }
 

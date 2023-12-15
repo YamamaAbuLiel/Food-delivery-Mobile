@@ -13,7 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
 
-
+//Control and manipulate the text entered into textfields
   TextEditingController fullName=TextEditingController();
   TextEditingController email=TextEditingController();
   TextEditingController phone=TextEditingController();
@@ -77,8 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 CustomTextField(controller: address, prefixIcon: Icons.location_city, labelText: "Address"),
                 CustomTextField(controller: password, prefixIcon: Icons.password, labelText: "Password"),
 
-                //password
-                //loginbut
+
                 Gap(15),
                 Row(
                   children: [
