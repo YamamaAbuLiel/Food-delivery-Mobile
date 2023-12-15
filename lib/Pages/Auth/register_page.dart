@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/main_page.dart';
+import 'package:untitled/Widgets/custom_text_field_widget.dart';
 import 'package:untitled/services/auth.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -70,72 +71,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 Text("Food Delivery" , style:TextStyle(fontSize: 36 ,fontWeight: FontWeight.bold) ),
                 Gap(15),
-                TextField(
-                controller: fullName,
-                  decoration: InputDecoration(
+                CustomTextField(controller: fullName, prefixIcon: Icons.person, labelText: "Full Name"),
+                CustomTextField(controller: email, prefixIcon: Icons.email, labelText: "Email"),
+                CustomTextField(controller: phone, prefixIcon: Icons.phone, labelText: "Mobile Number"),
+                CustomTextField(controller: address, prefixIcon: Icons.location_city, labelText: "Address"),
+                CustomTextField(controller: password, prefixIcon: Icons.password, labelText: "Password"),
 
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "Full Name",
-                    prefixIcon: Icon(Icons.person),
-
-                  ),
-                ),
-                Gap(15),
-                TextField(
-                controller: email,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "Email",
-                    prefixIcon: Icon(Icons.email),
-
-                  ),
-                ),
-                //password
-                //loginbut
-                Gap(15),
-                TextField(
-                  controller: phone,
-
-                  decoration: InputDecoration(
-
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "phone",
-                    prefixIcon: Icon(Icons.phone),
-
-                  ),
-                ),
-                Gap(15),
-                TextField(
-                  controller: address,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "Address",
-                    prefixIcon: Icon(Icons.location_city),
-
-                  ),
-                ),
-                Gap(15),
-                TextField(
-                  controller: password,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    hintText: "password",
-                    prefixIcon: Icon(Icons.password),
-
-                  ),
-                ),
                 //password
                 //loginbut
                 Gap(15),

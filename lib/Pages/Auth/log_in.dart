@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:untitled/Pages/Auth/register_page.dart';
-import 'package:untitled/Pages/main_page.dart';
 import 'package:untitled/Pages/profile_screen.dart';
+import 'package:untitled/Widgets/custom_text_field_widget.dart';
 import 'package:untitled/services/auth.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage ({super.key});
@@ -54,31 +54,9 @@ try {
 
             Text("Food Delivery" , style:TextStyle(fontSize: 36 ,fontWeight: FontWeight.bold) ),
             Gap(15),
-            TextField(
-              controller: emailCon,
-              decoration: InputDecoration(
 
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  hintText: "phone",
-                  prefixIcon: Icon(Icons.phone),
-
-              ),
-            ),
-            Gap(15),
-            TextField(
-              controller: passwordcon,
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                hintText: "password",
-                prefixIcon: Icon(Icons.password),
-
-              ),
-            ),
+            CustomTextField(controller: emailCon, prefixIcon: Icons.email, labelText: "Email"),
+            CustomTextField(controller: passwordcon, prefixIcon: Icons.password, labelText: "Password"),
             //password
             //loginbut
             Gap(15),
