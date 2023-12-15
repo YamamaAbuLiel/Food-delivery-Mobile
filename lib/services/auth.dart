@@ -100,7 +100,9 @@ class AuthMethods {
         if (await isDuplicatePhone(userId, userPhone)) {
           return "Phone number is already in use by another user";
         }
-
+        if (await isDuplicateEmail(userId, userEmail)) {
+          return "Email is already in use by another user";
+        }
 
 
         await users.doc(userId).update({
@@ -130,6 +132,20 @@ class AuthMethods {
       return querySnapshot.docs.isEmpty;
     } catch (e) {
       print("Error checking for duplicate phone number: $e");
+      return true;
+    }
+  }
+
+  Future<bool> isDuplicateEmail(String userId, String email) async {
+    try {
+      QuerySnapshot querySnapshot = await users
+          .where('userEmail', isEqualTo: email)
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      return querySnapshot.docs.isEmpty;
+    } catch (e) {
+      print("Error checking for duplicate email: $e");
       return true;
     }
   }

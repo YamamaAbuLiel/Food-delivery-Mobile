@@ -5,6 +5,9 @@ import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
 import 'package:untitled/services/auth.dart';
+
+import '../Widgets/custom_tab_bar_widget.dart';
+
 import '../Widgets/data_desing.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
+
 
 class _ProfileScreenState extends State<ProfileScreen> {
   logout() async {
@@ -27,6 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       print(e);
     }
   }
+
+class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin  {
+  bool get wantKeepAlive => true;
+
 
   @override
   void initState() {
@@ -161,6 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+
     );
   }
 }
