@@ -5,11 +5,14 @@ import 'package:untitled/Models/user.dart';
 class AuthMethods {
   //To handle user authentication and Firebase Firestore
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final CollectionReference users = FirebaseFirestore.instance.collection("users");
+  final CollectionReference users = FirebaseFirestore.instance.collection(
+      "users");
+
 //Check if the phone number is duplicated in DB
   Future<bool> checkForDuplicatePhone(String mobile) async {
     try {
-      QuerySnapshot querySnapshot = await users.where('userPhone', isEqualTo: mobile).get();
+      QuerySnapshot querySnapshot = await users.where(
+          'userPhone', isEqualTo: mobile).get();
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
       print("Error checking for duplicate phone number: $e");
@@ -25,7 +28,8 @@ class AuthMethods {
     required String userAddress
   }) async {
     try {
-      if (userEmail.isNotEmpty && userPhone.isNotEmpty && userName.isNotEmpty && password.isNotEmpty ||userAddress.isNotEmpty) {
+      if (userEmail.isNotEmpty && userPhone.isNotEmpty && userName.isNotEmpty &&
+          password.isNotEmpty || userAddress.isNotEmpty) {
         //  Check Validattion of  phone number format
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
@@ -37,8 +41,14 @@ class AuthMethods {
           return "Phone number is already in use";
         }
 
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: userEmail, password: password);
-        UserModel userModel = UserModel(userId: userCredential.user!.uid, userName: userName, userEmail: userEmail, userPhone: userPhone,userAddress: userAddress);
+        UserCredential userCredential = await _auth
+            .createUserWithEmailAndPassword(
+            email: userEmail, password: password);
+        UserModel userModel = UserModel(userId: userCredential.user!.uid,
+            userName: userName,
+            userEmail: userEmail,
+            userPhone: userPhone,
+            userAddress: userAddress);
         await users.doc(userCredential.user!.uid).set(userModel.toJson());
 
         return "Success";
@@ -52,11 +62,13 @@ class AuthMethods {
     }
   }
 
-  Future<String> signin({required String userEmail, required String password}) async {
+  Future<String> signin(
+      {required String userEmail, required String password}) async {
     String res = "some error";
     try {
       if (userEmail.isNotEmpty && password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(email: userEmail, password: password);
+        await _auth.signInWithEmailAndPassword(
+            email: userEmail, password: password);
         res = "Success";
       } else {
         res = "Enter All Fields";
@@ -72,10 +84,11 @@ class AuthMethods {
     }
     return res;
   }
-  getUserDetails()async{
-    User currentUser=_auth.currentUser!;
+
+  getUserDetails() async {
+    User currentUser = _auth.currentUser!;
     //take the curent data
-    DocumentSnapshot documentSnapshot= await users.doc(currentUser.uid).get();
+    DocumentSnapshot documentSnapshot = await users.doc(currentUser.uid).get();
     return UserModel.fromSnap(documentSnapshot);
   }
 
@@ -88,7 +101,8 @@ class AuthMethods {
   }) async {
     try {
       //Check if the user leave fields empty or enter invalid data
-      if (userName.isNotEmpty && userEmail.isNotEmpty && userPhone.isNotEmpty && userAddress.isNotEmpty) {
+      if (userName.isNotEmpty && userEmail.isNotEmpty && userPhone.isNotEmpty &&
+          userAddress.isNotEmpty) {
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
         }
@@ -151,11 +165,6 @@ class AuthMethods {
   }
 
 
-
-
-
-
-
   bool isPhoneNumberValid(String phone) {
     String phonePattern = r'^059\d{7}$';
     RegExp regex = RegExp(phonePattern);
@@ -167,6 +176,7 @@ class AuthMethods {
     RegExp regex = RegExp(emailPattern);
     return regex.hasMatch(email);
   }
+
   Future<String> resetPassword({required String userEmail}) async {
     try {
       await _auth.sendPasswordResetEmail(email: userEmail);
@@ -179,14 +189,8 @@ class AuthMethods {
       return "An unexpected error occurred while sending the password reset email.";
     }
   }
-  signout()async{
+
+  signout() async {
     await _auth.signOut();
-
-
-  signout()async{
-     await _auth.signOut();
-
   }
-
 }
-
