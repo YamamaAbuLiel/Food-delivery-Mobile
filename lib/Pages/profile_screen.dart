@@ -4,6 +4,8 @@ import 'package:untitled/Models/user.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
 import '../Widgets/data_desing.dart';
+import '../services/auth.dart';
+import 'Auth/log_in.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,6 +15,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  logout() async {
+    try {
+      await AuthMethods().signout();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+            (route) => false,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getDetails();
@@ -97,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {logout();},
                       child: Text(
                         "Log Out",
                         style: TextStyle(
