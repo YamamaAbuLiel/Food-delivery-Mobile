@@ -1,20 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Models/user.dart';
+import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
+import 'package:untitled/services/auth.dart';
+
 import '../Widgets/custom_tab_bar_widget.dart';
+
 import '../Widgets/data_desing.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  logout() async {
+    try {
+      await AuthMethods().signout();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+            (route) => false,
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
 class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin  {
   bool get wantKeepAlive => true;
+
 
   @override
   void initState() {
@@ -22,10 +42,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
-    UserModel? userModel = Provider
-        .of<UserProvider>(context)
-        .userModel;
+    UserModel? userModel = Provider.of<UserProvider>(context).userModel;
 
     if (userModel == null) {
       return Center(
@@ -45,7 +64,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               title: const Text(
                 "Profile",
                 style: TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Padding(
@@ -73,12 +94,11 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top:25.0,left: 25.0),
+              padding: const EdgeInsets.only(top: 25.0, left: 25.0),
               child: Row(
                 children: [
                   Text(
                     userModel.userName ?? '',
-                    // Use ?? to provide a default value if userModel.userName is null
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -100,7 +120,9 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        logout();
+                      },
                       child: Text(
                         "Log Out",
                         style: TextStyle(
