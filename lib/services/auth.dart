@@ -167,6 +167,21 @@ class AuthMethods {
     RegExp regex = RegExp(emailPattern);
     return regex.hasMatch(email);
   }
+  Future<String> resetPassword({required String userEmail}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: userEmail);
+      return "Password reset email sent. Check your email for instructions.";
+    } on FirebaseAuthException catch (e) {
+      print("FirebaseAuthException: ${e.message}");
+      return "Error sending password reset email: ${e.message}";
+    } on Exception catch (e) {
+      print("Exception: $e");
+      return "An unexpected error occurred while sending the password reset email.";
+    }
+  }
+  signout()async{
+    await _auth.signOut();
+
 
   signout()async{
      await _auth.signOut();

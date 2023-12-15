@@ -9,6 +9,8 @@ import 'package:untitled/services/auth.dart';
 import '../Widgets/custom_tab_bar_widget.dart';
 
 import '../Widgets/data_desing.dart';
+import '../services/auth.dart';
+import 'Auth/log_in.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -32,8 +34,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+
 class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin  {
   bool get wantKeepAlive => true;
+
 
 
   @override
@@ -120,9 +124,12 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                     width: 150,
                     height: 50,
                     child: ElevatedButton(
+                      onPressed: () {logout();},
+
                       onPressed: () {
                         logout();
                       },
+
                       child: Text(
                         "Log Out",
                         style: TextStyle(
