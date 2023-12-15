@@ -15,11 +15,21 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    Provider.of<UserProvider>(context,listen:false).getDetails();
+    Provider.of<UserProvider>(context, listen: false).getDetails();
     super.initState();
   }
+
   Widget build(BuildContext context) {
-    UserModel userModel=Provider.of<UserProvider>(context).userModel!;
+    UserModel? userModel = Provider
+        .of<UserProvider>(context)
+        .userModel;
+
+    if (userModel == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +40,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             centerTitle: true,
             title: const Text(
               "Profile",
-              style: TextStyle(color: Colors.black ,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
@@ -57,12 +68,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-           Padding(
+          Padding(
             padding: EdgeInsets.all(25.0),
             child: Row(
               children: [
                 Text(
-                  userModel.userName,
+                  userModel.userName ?? '',
+                  // Use ?? to provide a default value if userModel.userName is null
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -71,26 +83,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-           DataDesign("Mobile Number", userModel.userPhone),
-           DataDesign("Email", userModel.userEmail),
-           DataDesign("Address", userModel.userAddress),
+          DataDesign("Mobile Number", userModel.userPhone ?? ''),
+          DataDesign("Email", userModel.userEmail ?? ''),
+          DataDesign("Address", userModel.userAddress ?? ''),
 
           Padding(
-            padding: const EdgeInsets.only(top:30.0),
+            padding: const EdgeInsets.only(top: 30.0),
             child: Row(
-              mainAxisAlignment:MainAxisAlignment.spaceEvenly,
-
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-
-
-                SizedBox( width:150, height: 50,    child: ElevatedButton(onPressed: (){}, child: Text("Log Out",style: TextStyle(color: Colors.black , fontSize: 16,fontWeight: FontWeight.bold)) ,style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red),))),
-                SizedBox( width:150, height: 50,    child: ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>EditCustmerProfile()));}, child: Text("Edit",style: TextStyle(color: Colors.black , fontSize: 16,fontWeight: FontWeight.bold)) ,style:ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.yellow)))),
-
-
+                SizedBox(
+                  width: 150,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Log Out",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.red),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 150,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditCustmerProfile(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Edit",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.yellow),
+                    ),
+                  ),
+                ),
               ],
             ),
-          )
-
+          ),
         ],
       ),
     );
