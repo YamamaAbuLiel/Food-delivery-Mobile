@@ -15,6 +15,18 @@ class LoginPage extends StatefulWidget {
 class _State extends State<LoginPage> {
   TextEditingController emailCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
+  //Control and manipulate the text entered into textfields
+
+  TextEditingController emailCon=TextEditingController();
+  TextEditingController passwordcon=TextEditingController();
+  signin() async{
+String response= await AuthMethods().signin(userEmail: emailCon.text, password: passwordcon.text);
+try {
+  if (response == "Success") {
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>ProfileScreen()), (route) => false);      }
+  else {
+    showErrorMessage(response);
+
 
   signin() async {
     String response = await AuthMethods().signin(

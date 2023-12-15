@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Models/user.dart';
+import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
+import 'package:untitled/services/auth.dart';
+
+import '../Widgets/custom_tab_bar_widget.dart';
+
 import '../Widgets/data_desing.dart';
 import '../services/auth.dart';
 import 'Auth/log_in.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
+
 
 class _ProfileScreenState extends State<ProfileScreen> {
   logout() async {
@@ -27,16 +33,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
       print(e);
     }
   }
+
+
+class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin  {
+  bool get wantKeepAlive => true;
+
+
+
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getDetails();
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
-    UserModel? userModel = Provider
-        .of<UserProvider>(context)
-        .userModel;
+    UserModel? userModel = Provider.of<UserProvider>(context).userModel;
 
     if (userModel == null) {
       return Center(
@@ -56,7 +68,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: const Text(
                 "Profile",
                 style: TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.bold),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Padding(
@@ -84,12 +98,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top:25.0,left: 25.0),
+              padding: const EdgeInsets.only(top: 25.0, left: 25.0),
               child: Row(
                 children: [
                   Text(
                     userModel.userName ?? '',
-                    // Use ?? to provide a default value if userModel.userName is null
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -112,6 +125,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {logout();},
+
+                      onPressed: () {
+                        logout();
+                      },
+
                       child: Text(
                         "Log Out",
                         style: TextStyle(
@@ -158,6 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+
     );
   }
 }
