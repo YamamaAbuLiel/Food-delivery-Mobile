@@ -6,6 +6,7 @@ import 'package:untitled/Pages/Auth/register_page.dart';
 import 'package:untitled/provider/userprovider.dart';
 import 'Pages/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Widgets/custom_tab_bar_widget.dart';
 import 'firebase_options.dart';
 
 void main() async {

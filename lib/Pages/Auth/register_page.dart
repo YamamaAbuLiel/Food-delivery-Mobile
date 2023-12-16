@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
       if (response == "Success") {
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>MainPage()), (route) => false);      } else {
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);      } else {
         // Show the error message in the application
         showErrorMessage(response);
       }

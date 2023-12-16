@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../Widgets/app_bar_widget.dart';
 import '../Widgets/custom_tab_bar_widget.dart';
 
 class Search extends StatelessWidget {
@@ -10,11 +11,7 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Serch"),
-
-      ),
-      //bottomNavigationBar: CustomTabBar(),
+      appBar: Custom_AppBar(head: "Search"),
 
     );
   }

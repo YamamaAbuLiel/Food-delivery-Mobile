@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Widgets/custom_tab_bar_widget.dart';
+import 'package:untitled/Widgets/app_bar_widget.dart';
+
+import '../Widgets/app_bar_widget.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key});
@@ -7,14 +9,8 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(231, 108, 56, 100),
-        title: Text('Main Page'),
-        centerTitle: true,
-      ),
-
-     // bottomNavigationBar: CustomTabBar(),
-
+      appBar: Custom_AppBar(head: "Main Page"),
     );
   }
 }
+

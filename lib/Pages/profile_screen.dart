@@ -5,6 +5,7 @@ import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/edit_customer_profile.dart';
 import 'package:untitled/provider/userprovider.dart';
 import 'package:untitled/services/auth.dart';
+import '../Widgets/app_bar_widget.dart';
 import '../Widgets/custom_tab_bar_widget.dart';
 import '../Widgets/data_desing.dart';
 
@@ -46,22 +47,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     return Scaffold(
+      appBar: Custom_AppBar(head: "Profile"),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            AppBar(
-              backgroundColor: const Color.fromRGBO(231, 108, 56, 100),
-              centerTitle: true,
-              title: const Text(
-                "Profile",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(

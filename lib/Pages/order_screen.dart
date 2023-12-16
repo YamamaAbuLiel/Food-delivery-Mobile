@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../Widgets/app_bar_widget.dart';
 import '../Widgets/custom_tab_bar_widget.dart';
 
 class Order extends StatelessWidget {
@@ -9,10 +10,8 @@ class Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Order"),
-      ),
-      //bottomNavigationBar: CustomTabBar(),
+      appBar: Custom_AppBar(head: "Orders"),
+
 
     );
   }

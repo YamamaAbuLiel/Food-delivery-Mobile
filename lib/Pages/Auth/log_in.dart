@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:untitled/Pages/Auth/register_page.dart';
-import 'package:untitled/Pages/profile_screen.dart';
+import 'package:untitled/Widgets/custom_tab_bar_widget.dart';
 import 'package:untitled/Widgets/custom_text_field_widget.dart';
 import 'package:untitled/services/auth.dart';
 
@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response == "Success") {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => ProfileScreen()),
+          MaterialPageRoute(builder: (context) => CustomTabBar()),
               (route) => false,
         );
       } else {

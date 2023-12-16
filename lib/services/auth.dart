@@ -25,12 +25,15 @@ class AuthMethods {
     required String userEmail,
     required String userPhone,
     required String password,
-    required String userAddress
+    required String userAddress,
   }) async {
     try {
-      if (userEmail.isNotEmpty && userPhone.isNotEmpty && userName.isNotEmpty &&
-          password.isNotEmpty || userAddress.isNotEmpty) {
-        //  Check Validattion of  phone number format
+      if (userEmail.isNotEmpty &&
+          userPhone.isNotEmpty &&
+          userName.isNotEmpty &&
+          password.isNotEmpty ||
+          userAddress.isNotEmpty) {
+        // Validate phone number format
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
         }
@@ -41,14 +44,22 @@ class AuthMethods {
           return "Phone number is already in use";
         }
 
-        UserCredential userCredential = await _auth
-            .createUserWithEmailAndPassword(
-            email: userEmail, password: password);
-        UserModel userModel = UserModel(userId: userCredential.user!.uid,
-            userName: userName,
-            userEmail: userEmail,
-            userPhone: userPhone,
-            userAddress: userAddress);
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: userEmail,
+          password: password,
+        );
+
+        // Send email verification
+        await userCredential.user!.sendEmailVerification();
+
+        UserModel userModel = UserModel(
+          userId: userCredential.user!.uid,
+          userName: userName,
+          userEmail: userEmail,
+          userPhone: userPhone,
+          userAddress: userAddress,
+        );
+
         await users.doc(userCredential.user!.uid).set(userModel.toJson());
 
         return "Success";
@@ -62,28 +73,38 @@ class AuthMethods {
     }
   }
 
-  Future<String> signin(
-      {required String userEmail, required String password}) async {
-    String res = "some error";
+
+  Future<String> signin({required String userEmail, required String password}) async {
     try {
       if (userEmail.isNotEmpty && password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
-            email: userEmail, password: password);
-        res = "Success";
+        UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: userEmail,
+          password: password,
+        );
+
+        // Check if the user's email is verified
+        if (userCredential.user!.emailVerified) {
+          // User's email is verified, allow sign-in
+          return "Success";
+        } else {
+          // User's email is not verified, show a message and sign out the user
+          await _auth.signOut();
+          return "Email not verified. Please check your email for the verification link.";
+        }
       } else {
-        res = "Enter All Fields";
+        return "Enter All Fields";
       }
     } on FirebaseAuthException catch (e) {
       // Handle specific Firebase authentication exceptions here
       print("FirebaseAuthException: ${e.message}");
-      res = "Email or password are not correct ";
+      return "Email or password are not correct ";
     } on Exception catch (e) {
       // Handle other generic exceptions here
       print("Exception: $e");
-      res = "An unexpected error occurred";
+      return "An unexpected error occurred";
     }
-    return res;
   }
+
 
   getUserDetails() async {
     User currentUser = _auth.currentUser!;
@@ -100,9 +121,21 @@ class AuthMethods {
     required String userAddress,
   }) async {
     try {
+
       //Check if the user leave fields empty or enter invalid data
       if (userName.isNotEmpty && userEmail.isNotEmpty && userPhone.isNotEmpty &&
           userAddress.isNotEmpty) {
+
+
+
+        await users.doc(userId).update({
+          "userName": userName,
+          "userEmail": userEmail,
+          "userPhone": userPhone,
+          "userAddress": userAddress,
+        });
+        //Give it time to check
+        await Future.delayed(Duration(seconds: 1));
         if (!isPhoneNumberValid(userPhone)) {
           return "Invalid phone number format";
         }
@@ -117,14 +150,6 @@ class AuthMethods {
         if (await isDuplicateEmail(userId, userEmail)) {
           return "Email is already in use by another user";
         }
-
-
-        await users.doc(userId).update({
-          "userName": userName,
-          "userEmail": userEmail,
-          "userPhone": userPhone,
-          "userAddress": userAddress,
-        });
 
         return "Success";
       } else {
