@@ -41,10 +41,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
     UserModel? userModel = Provider.of<UserProvider>(context).userModel;
 
     if (userModel == null) {
-      return Center(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        appBar: Custom_AppBar(head: ('Profile'),),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'You are not logged in. Please log in.',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 30),
+              ElevatedButton(
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all<Size>(Size(250, 60),),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(231, 108, 56, 1.0))
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                child: Text('Log In',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     }
+
 
     return Scaffold(
       appBar: Custom_AppBar(head: "Profile"),

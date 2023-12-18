@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Pages/Auth/log_in.dart';
 import 'package:untitled/Pages/Auth/register_page.dart';
+import 'package:untitled/Pages/splash.dart';
 
 import 'package:untitled/provider/userprovider.dart';
 import 'Pages/profile_screen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true),
-        home:RegisterPage(),
+        home:FoodDeliver(),
         //home: ProfileScreen(),
       ),
     );
