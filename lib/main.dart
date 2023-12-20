@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context)=>UserProvider(),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         theme: ThemeData(useMaterial3: true),
         home:FoodDeliver(),
         //home: ProfileScreen(),

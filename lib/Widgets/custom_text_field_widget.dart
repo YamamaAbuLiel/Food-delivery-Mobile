@@ -4,12 +4,14 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final IconData prefixIcon;
   final String labelText;
+  final FormFieldValidator<String>? validator; // Add validator here
 
   const CustomTextField({
     Key? key,
     required this.controller,
     required this.prefixIcon,
     required this.labelText,
+    this.validator, // Validator parameter
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 13.0),
       child: Column(
         children: [
-          TextField(
+          TextFormField(
             controller: controller,
             obscureText: isPassword,
             decoration: InputDecoration(
@@ -35,6 +37,8 @@ class CustomTextField extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
+            // Add validator to the TextFormField widget
+            validator: validator,
           ),
           SizedBox(height: 15),
         ],

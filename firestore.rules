@@ -1,0 +1,57 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+  match /items/{itemId} {
+    allow read: if true;
+  }
+    match /users/{userId} {
+      allow write: if request.auth.uid == userId;
+
+      // Assuming 'users' collection has documents with 'userPhone' and 'userEmail' fields.
+      allow read: if true;
+      allow create, update: if isValidUserData(request.resource.data);
+
+      // Function to check if user data is valid
+      function isValidUserData(userData) {
+        return isValidUserPhone(userData.userPhone) && isValidUserEmail(userData.userEmail);
+      }
+
+      // Function to check if the phone number is valid and not already used.
+      function isValidUserPhone(phone) {
+        return isValidPhoneNumber(phone) && !isPhoneNumberInUse(phone);
+      }
+
+      // Function to check if the email is valid and not already used.
+      function isValidUserEmail(email) {
+        return isValidEmail(email) && !isEmailInUse(email);
+      }
+
+      // Function to check if the phone number is valid.
+      function isValidPhoneNumber(phone) {
+        return phone.matches('059\\d{7}');
+      }
+
+      // Function to check if the email is valid.
+      function isValidEmail(email) {
+        // Add your email validation logic here.
+        // For a basic example, we assume that any string is a valid email.
+        return email is string;
+      }
+
+      // Function to check if the phone number is already in use.
+      function isPhoneNumberInUse(phone) {
+        return exists(/databases/$(database)/documents/usedPhones/$(phone));
+      }
+
+      // Function to check if the email is already in use.
+      function isEmailInUse(email) {
+        return exists(/databases/$(database)/documents/usedEmails/$(email));
+      }
+    }
+  }
+
+}
+
+
