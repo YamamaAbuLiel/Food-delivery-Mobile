@@ -7,7 +7,6 @@ class UserProvider with ChangeNotifier {
   UserModel ?userModel;
   bool isLoad =true;
 
-  //Get user details asynchronously
   getDetails()async{
     userModel= await AuthMethods().getUserDetails();
     isLoad=false;

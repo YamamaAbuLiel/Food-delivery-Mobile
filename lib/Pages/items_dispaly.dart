@@ -17,12 +17,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: Custom_AppBar(head: "Main Page"),
       body: FutureBuilder(
         future: itemsService.getItems(),
+        //Depending on the states of snapshot display the proper UI
         builder: (context, AsyncSnapshot<List<Items>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
+            //Handel if the data might be null "Null-aware operator"
             List<Items> items = snapshot.data ?? [];
 
             return ListView.builder(
@@ -30,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemBuilder: (context, index) {
                 Items item = items[index];
                 return ListTile(
+
                   title: Text(item.itemName),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
