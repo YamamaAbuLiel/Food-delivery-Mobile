@@ -25,10 +25,10 @@ class UserModel {
       userId: snapshot["userId"],
       userName: snapshot["userName"],
       userEmail: snapshot["userEmail"],
-      userPhone: snapshot["userPhone"],
-      userAddress: snapshot["userAddress"],
-    );
-  }
+  userPhone: snapshot["userPhone"],
+  userAddress: snapshot["userAddress"],
+  );
+}
 
   // Send Data to Firebase
   Map<String, dynamic> toJson() => {

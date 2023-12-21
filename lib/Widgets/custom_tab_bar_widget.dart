@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/Pages/cart.dart';
-import 'package:untitled/Pages/main_page.dart';
 import 'package:untitled/Pages/order_screen.dart';
 import 'package:untitled/Pages/profile_screen.dart';
 import 'package:untitled/Pages/search.dart';
+
+import '../Pages/items_dispaly.dart';
 
 class CustomTabBar extends StatefulWidget {
   const CustomTabBar({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    MainPage(),
+    MyHomePage(),
     Search(),
     Cart(),
     Order(),
